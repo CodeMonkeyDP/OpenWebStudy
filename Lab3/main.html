@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <form name="search">
+            <textarea id="input" rows="15" cols="40" name="textArea"></textarea> 
+            <a onclick = "countWords()">Подсчитать</a>
+        </form>
+    </body>
+    <script>
+        function countWords()
+        {
+            var elem = document.getElementById("input"); // Получаем TextArea
+            var text = elem.value; // Получаем значение TextArea
+
+            // Если текста нет, выводим "NO"
+            if (text == "")
+            {
+                alert("NO");
+            }
+            // Иначе считаем слова
+            else
+            {
+                alert(text.split(" ").length);
+            }
+            
+        }
+    </script>
+</html>
