@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <form method="post" onsubmit="return strValid()">
+            <textarea name="text" id = "input" rows="20" cols="60"></textarea>
+            <input type="submit" value="Submit text" />
+        </form>
+    </body>
+    <script>
+        function strValid() {
+            var input = document.getElementById("input");
+            var text = input.value;
+
+            var animals = ['giena', 'gazel', 'gekkon'];
+            
+            var arr = text.split(' ');
+
+            for (var i = 0; i < animals.length; i++)
+            {
+                if ( text == animals[i] )
+                {
+                    return true;
+                }
+                else
+                {
+                    for (var j = 0; j < 10; j++)
+                    {
+                        if (text == animals[i] + ' ' + j)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            alert ("INVALID FORMAT!");
+            return false;
+        }
+    </script>
+</html>
