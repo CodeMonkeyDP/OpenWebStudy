@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <a>Введите данные для запроса:</a>
+        <br>
+        <b>Вид</b>
+        <br>
+        <input id="species" rows="1" cols="10"></input>
+        <p></p>
+        <b>Ширина</b>
+        <br>
+        <input id="width" rows="1" cols="10"></input>
+        <p></p>
+        <b>Высота</b>
+        <br>
+        <input id="height" rows="1" cols="10"></input>
+        <p></p>
+        <b>Цвет</b>
+        <br>
+        <input id="color" rows="1" cols="10"></input>
+        <p></p>
+        <b>Номер</b>
+        <br>
+        <input id="number" rows="1" cols="10"></input>
+        <p></p>
+        <input type="submit" value="Найти изображение" onclick="find()"/>
+    </body>
+    <script>
+        async function find() {
+
+            console.log("Find started");
+            var imgspecies = null;
+            var imgwidth = null;
+            var imgheight = null;
+            var imgcolor = null;
+            var imgnumber = null;
+            var imgimage = null;
+
+            imgspecies = document.getElementById("species").value;
+            imgwidth = document.getElementById("width").value;
+            imgheight = document.getElementById("height").value;
+            imgcolor = document.getElementById("color").value;
+            imgnumber = document.getElementById("number").value;
+            imgimage = "pic/" + String(imgspecies) + String(imgnumber) + ".jpg";
+
+            let animalsJSON = {
+                species: imgspecies,
+                width: imgwidth,
+                height: imgheight,
+                color: imgcolor,
+                image: imgimage,
+                value: imgnumber
+            };
+
+            let responce = await fetch('./api/animal',{
+                method: 'POST',
+                headers :{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(animalsJSON)
+            });
+
+            const json = await responce.json();
+
+            console.log(json);
+
+            // Ошибка
+            if (json.error != null)
+            {
+                console.log(json.error);
+                var pjson = JSON.stringify(json);
+                document.write(pjson);
+            }
+            else
+            {
+                document.write('<img id="reqImg" src ="">');
+
+                console.log(json.image);
+
+                
+                document.getElementById("reqImg").src = json.image;
+                delete json._id;
+                delete json.__v;
+                var pjson = JSON.stringify(json);
+                document.write(pjson);
+            }
+
+
+        }
+    </script>
+</html>
